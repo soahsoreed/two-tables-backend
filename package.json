@@ -1,0 +1,35 @@
+{
+  "name": "task_manager_integrator",
+  "version": "1.0.0",
+  "author": "",
+  "type": "module",
+  "scripts": {
+    "compile": "tsc -p tsconfig.json && node build/src/main.js",
+    "dev": "npx nodemon -e ts  --exec \"npm run compile\"",
+    "prod": "tsc -p tsconfig.release.json && node build/src/main.js",
+    "lint": "eslint ."
+  },
+  "engines": {
+    "node": ">= 22.1.0 < 23"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "tslib": "~2.7",
+    "uuid": "^10.0.0",
+    "winston": "^3.15.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "~9.10",
+    "@types/eslint__js": "~8.42",
+    "@types/express": "^5.0.0",
+    "@types/node": "^20.16.10",
+    "@types/pg": "^8.11.10",
+    "@typescript-eslint/parser": "~8.5",
+    "eslint": "~9.10",
+    "globals": "~15.9",
+    "typescript": "~5.5",
+    "typescript-eslint": "~8.5"
+  },
+  "license": "Apache-2.0"
+}
