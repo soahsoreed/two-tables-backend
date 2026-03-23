@@ -5,7 +5,10 @@ export function searchByQuery(items: IRecord[], query: string) {
 
   const result = items.filter(item => {
     const normalizedId = normalizeText(String(item.id));
-    return normalizedId.includes(queryNormalized);
+    const normalizedName = normalizeText(String(item.name));
+
+    return normalizedId.includes(queryNormalized) || 
+      normalizedName.includes(queryNormalized);
   });
 
   return result;
