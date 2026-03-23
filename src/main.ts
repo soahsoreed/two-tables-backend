@@ -32,7 +32,17 @@ app.use(cors());
 app.post('/api/records', async (req, res) => {
   try {
 
-    res.send(200);
+    const newItem: IRecord = {
+      id: itemsArray.length + 1,
+      sortIndex: null,
+      name: req.body.name,
+      isSelected: req.body.isSelected
+    };
+
+    console.log('newItem', newItem);
+
+    itemsArray.push(newItem);
+    res.status(200);
 
   } catch (err) {
 
@@ -85,7 +95,7 @@ app.put('/api/records/:id', (req, res) => {
   const isSelected = req.body.isSelected;
 
   const patch = {
-    sortIndex: sortIndex || item.sortIndex,
+    sortIndex: sortIndex !== null || sortIndex !== undefined ? sortIndex : item.sortIndex,
     isSelected: isSelected === undefined ? item.isSelected : isSelected,
   };
 
