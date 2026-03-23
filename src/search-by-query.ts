@@ -4,8 +4,8 @@ export function searchByQuery(items: IRecord[], query: string) {
   const queryNormalized = normalizeText(query);
 
   const result = items.filter(item => {
-    const nameNormalized = normalizeText(String(item.id));
-    return nameNormalized.includes(queryNormalized);
+    const normalizedId = normalizeText(String(item.id));
+    return normalizedId.includes(queryNormalized);
   });
 
   return result;

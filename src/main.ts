@@ -12,6 +12,18 @@ const { default: data } = await import('../db.json', {
   with: { type: 'json' }
 });
 
+let itemsArray = data as IRecord[];
+
+function patchRecord(items: IRecord[], id: number, newData) {
+  return items.map((item: IRecord) => {
+    if (item.id === id) {
+      return { ...item, ...newData };
+    }
+
+    return item;
+  });
+};
+
 const app = express();
 
 app.use(express.json());
@@ -36,7 +48,6 @@ app.get('/api/records', async (req, res) => {
   const offset = (page - 1) * limit;
   const searchQuery = (req.query.search || '') as string;
 
-  const itemsArray = data as IRecord[];
   const filtered = searchByQuery(itemsArray, searchQuery);
 
   try {
@@ -60,6 +71,30 @@ app.get('/api/records', async (req, res) => {
     customLogger.log('error', errorText);
     res.send(errorText).status(500);
   }
+});
+
+app.put('/api/records/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const item = itemsArray.find(it => it.id === id);
+
+  if (!item) {
+    res.sendStatus(404);
+  }
+
+  const sortIndex = req.body.sortIndex;
+  const isSelected = req.body.isSelected;
+
+  const patch = {
+    sortIndex: sortIndex || item.sortIndex,
+    isSelected: isSelected === undefined ? item.isSelected : isSelected,
+  };
+
+  console.log('id', id, 'patch', patch)
+
+  const newData = patchRecord(itemsArray, id, patch);
+  itemsArray = newData;
+
+  res.send(200);
 });
 
 app.get('/api/ping', (req, res) => {
@@ -101,8 +136,8 @@ app
 //   fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf8');
 // };
 
-const items = generateDbItems(100_000);
-fs.writeFileSync('db.json', JSON.stringify(items, null, 2), 'utf8');
+// const items = generateDbItems(100_000);
+// fs.writeFileSync('db.json', JSON.stringify(items, null, 2), 'utf8');
 
 // Example route to get all items
 // app.get('/api/items', (req, res) => {

@@ -8,7 +8,7 @@ export function generateDbItems(length: number): IRecord[] {
         "id": index,
         "name": `Item ${index}`,
         "isSelected": false,
-        "sortId": index
+        "sortIndex": null
       }
     });
 
