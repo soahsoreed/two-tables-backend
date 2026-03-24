@@ -4,9 +4,11 @@ export function generateDbItems(length: number): IRecord[] {
   const res = new Array(length)
     .fill(null)
     .map((_, index) => {
+      const id = index + 1;
+
       return {
-        "id": index,
-        "name": `Item ${index}`,
+        "id": id,
+        "name": `Item ${id}`,
         "isSelected": false,
         "sortIndex": null
       }
