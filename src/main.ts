@@ -39,7 +39,7 @@ app.post('/api/records', async (req, res) => {
     console.log('newItem', newItem);
 
     itemsArray.push(newItem);
-    res.status(200);
+    res.send(200);
 
   } catch (err) {
 
